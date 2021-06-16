@@ -25,7 +25,7 @@
             class="form-control"
             id="firstName"
             placeholder="First Name"
-            v-model="user.firstName"
+            v-model="user.firstname"
             required
           />
           <div class="invalid-feedback">Valid first name is required.</div>
@@ -34,7 +34,7 @@
           <input
             type="text"
             class="form-control"
-            v-model="user.lastName"
+            v-model="user.lastname"
             id="lastName"
             placeholder="Last Name"
             value
@@ -54,7 +54,7 @@
             value
             required
           />
-          <div class="invalid-feedback">Valid first name is required.</div>
+          <div class="invalid-feedback">Valid email is required.</div>
         </div>
       </div>
       <div class="row">
@@ -68,7 +68,7 @@
             v-model="user.password"
             required
           />
-          <div class="invalid-feedback">Valid first name is required.</div>
+          <div class="invalid-feedback">Valid password is required.</div>
         </div>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -79,15 +79,15 @@
 </template>
 <script>
 import axios from "axios";
-import { successToaster, errorToaster } from "./shared/service/ErrorHandler.js";
+import { successToaster, errorToaster } from "./service/ErrorHandler.js";
 export default {
   name: "CreateAccount",
   data() {
     return {
       showLoader: false,
       user: {
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         email: "",
         password: "",
       },
@@ -100,7 +100,7 @@ export default {
 
       this.errorMessage = [];
 
-      if (this.user.firstName.length < 5) {
+      if (this.user.firstname.length < 5) {
         this.errorMessage.push(
           "FirstName should contains more than 5 character"
         );
@@ -111,7 +111,7 @@ export default {
       }
       if (this.errorMessage.length === 0) {
         axios
-          .post(`${process.env.VUE_APP_BASE_URL}/users`, this.user)
+          .post(`http://localhost:3000/register`, this.user, { headers: { "Access-Control-Allow-Origin": "*", } })
           .then(() => {
             this.showLoader = false;
             successToaster(

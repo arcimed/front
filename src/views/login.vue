@@ -46,7 +46,7 @@
             <a href="javascript:;;" @click="toggleForm">Sign in</a>
           </span>
           <span v-if="!isSignUp">
-            New to ikismail?
+            New to cesitonplat?
             <a href="javascript:;;" @click="toggleForm">Create an Account</a>
           </span>
         </p>
@@ -57,7 +57,7 @@
 <script>
 import CreateAccount from "@/components/CreateAccount";
 import axios from "axios";
-import { errorToaster } from "../components/shared/service/ErrorHandler.js";
+import { errorToaster } from "../components/service/ErrorHandler.js";
 
 import { mapMutations } from "vuex";
 
@@ -88,7 +88,7 @@ export default {
       };
 
       axios
-        .post(`${process.env.VUE_APP_BASE_URL}/login`, user)
+        .post(`http://localhost:3000/connect`, user)
         .then((response) => {
           this.showLoader = false;
           this.ADD_LOGGED_USER(response.data[0]);
