@@ -86,9 +86,8 @@ export default {
         email: this.email,
         password: this.password,
       };
-
       axios
-        .post(`http://localhost:3000/connect`, user)
+        .post(`http://localhost:3000/user-connect`, user)
         .then((response) => {
           this.showLoader = false;
           this.ADD_LOGGED_USER(response.data[0]);

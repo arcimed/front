@@ -110,8 +110,13 @@ export default {
         this.errorMessage.push("Please provide a valid Email address");
       }
       if (this.errorMessage.length === 0) {
-        axios
-          .post(`http://localhost:3000/register`, this.user, { headers: { "Access-Control-Allow-Origin": "*", } })
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/user-register',
+          data: this.user
+        })
+        /*axios
+          .post(`http://localhost:3000/user-register`, this.user)*/
           .then(() => {
             this.showLoader = false;
             successToaster(
