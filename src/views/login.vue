@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col">
         <createAccount v-if="isSignUp"></createAccount>
-
-        <form class="form-signin" @submit.prevent="login" v-if="!isSignUp">
+        <popup v-if="isError" :title="'error'" :message="'ceci est une erreur'"></popup>
+        <form class="form-signin col-mb-12" @submit.prevent="login" v-if="!isSignUp">
           <img
             class="mb-4"
             src="../assets/login-img.png"
@@ -12,18 +12,16 @@
             width="72"
             height="72"
           />
-          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-          <label for="email" class="sr-only">Email address</label>
-          <input
-            type="email"
-            id="email"
-            class="form-control"
-            v-model="email"
-            placeholder="Email address"
-            required
-            autocomplete="email"
-          />
-          <label for="password" class="sr-only">Password</label>
+          <h1 class="h3 mb-12 font-weight-normal">Please sign in</h1>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              v-model="email"
+              placeholder="Email address"
+              required
+              autocomplete="email"
+            />
           <input
             type="password"
             id="password"
@@ -58,18 +56,20 @@
 import CreateAccount from "@/components/CreateAccount";
 import axios from "axios";
 import { errorToaster } from "../components/service/ErrorHandler.js";
+import popup from '../components/popup.vue'
 
 import { mapMutations } from "vuex";
 
 export default {
   name: "login",
-  components: { CreateAccount },
+  components: { CreateAccount, popup },
   data() {
     return {
       email: "",
       password: "",
       showLoader: false,
       isSignUp: false,
+      isError:false
     };
   },
   methods: {
@@ -96,8 +96,10 @@ export default {
         })
         .catch((error) => {
           this.showLoader = false;
+          this.isError = true;
           errorToaster("Invalid Credentials", "");
           console.log(error);
+          console.log(this.isError);
         });
     },
   },
@@ -120,12 +122,18 @@ export default {
 .form-signin .checkbox {
   font-weight: 400;
 }
+.form-control{
+  border-width: 1px;
+  border: solid;
+}
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
   height: auto;
   padding: 10px;
   font-size: 16px;
+  z-index: 2;
+  border-width: 5px;
 }
 .form-signin .form-control:focus {
   z-index: 2;

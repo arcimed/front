@@ -28,7 +28,6 @@
             v-model="user.firstname"
             required
           />
-          <div class="invalid-feedback">Valid first name is required.</div>
         </div>
         <div class="col-md-6 mb-3">
           <input
@@ -40,7 +39,6 @@
             value
             required
           />
-          <div class="invalid-feedback">Valid last name is required.</div>
         </div>
       </div>
       <div class="row">
@@ -54,7 +52,6 @@
             value
             required
           />
-          <div class="invalid-feedback">Valid email is required.</div>
         </div>
       </div>
       <div class="row">
@@ -68,7 +65,6 @@
             v-model="user.password"
             required
           />
-          <div class="invalid-feedback">Valid password is required.</div>
         </div>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -110,13 +106,8 @@ export default {
         this.errorMessage.push("Please provide a valid Email address");
       }
       if (this.errorMessage.length === 0) {
-        axios({
-          method: 'post',
-          url: 'http://localhost:3000/user-register',
-          data: this.user
-        })
-        /*axios
-          .post(`http://localhost:3000/user-register`, this.user)*/
+        axios
+          .post(`http://localhost:3000/user-register`, this.user)
           .then(() => {
             this.showLoader = false;
             successToaster(
@@ -127,18 +118,15 @@ export default {
           .catch((error) => {
             console.log(error);
             errorToaster(
-              "Registeration Failed",
-              "Please try again after sometime"
+                "Registeration Failed",
+                "Please try again after sometime"
             );
           });
       }
     },
 
     ValidateEmail(mail) {
-      if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
-        return true;
-      }
-      return false;
+      return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(mail);
     },
   },
 };
