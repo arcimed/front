@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <createAccount v-if="isSignUp"></createAccount>
-        <popup v-if="isError" :title="'error'" :message="'ceci est une erreur'"></popup>
+        <popup  :title="'error'" :message="'ceci est une erreur'"></popup>
         <form class="form-signin col-mb-12" @submit.prevent="login" v-if="!isSignUp">
           <img
             class="mb-4"

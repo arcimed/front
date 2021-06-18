@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md mb-3">
+        <div class="col-md-6 mb-3">
           <input
             type="text"
             class="form-control"
@@ -53,9 +53,7 @@
             required
           />
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md mb-3">
+        <div class="col-md-6 mb-3">
           <input
             type="text"
             class="form-control"
@@ -65,6 +63,43 @@
             v-model="user.password"
             required
           />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <input
+              type="text"
+              class="form-control"
+              id="act-address"
+              placeholder="Address"
+              value
+              v-model="user.address"
+              required
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <input
+              type="text"
+              class="form-control"
+              id="act-city"
+              placeholder="City"
+              value
+              v-model="user.city"
+              required
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <span>role : </span>
+          <select v-model="user.role" class="form-control" placeholder="Role">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+          </select>
         </div>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -86,6 +121,9 @@ export default {
         lastname: "",
         email: "",
         password: "",
+        address:"",
+        city: "",
+        role: "",
       },
       errorMessage: [],
     };
