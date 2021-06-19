@@ -10,30 +10,28 @@
   import Vue from 'vue'
   import restocard from '../components/restocard.vue'
   import axios from "axios";
-  /*const config = {
+
+  let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
+  const config = {
     headers: { Authorization: `Bearer ${token}` }
-  };*/
-  let data = {
-    restos: [
-      {name: "test", address:"7 route du quemeneau", city:"saint-nazaire"},
-      {name: "test2", address:"7 route du quemeneau", city:"saint-nazaire"},
-      {name: "test3", address:"7 route du quemeneau", city:"saint-nazaire"}
-    ],
-  }
+  };
+
   export default Vue.extend({
     name: 'Home',
     components: {
       restocard,
     },
     data() {
-      return data
-      /*let restos: []*/
+      return {
+        restos: [],
+      };
     },
     created: function () {
-     /* axios
-          .get(`http://localhost:3000/api/restaurant/all`)
+      axios
+          .get(`http://localhost:3000/api/restaurant/all`, config)
           .then((response) => {
-          });*/
+            this.restos = response.data
+          });
     }
   })
 </script>

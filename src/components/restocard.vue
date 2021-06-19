@@ -31,6 +31,7 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-actions>
+      <router-link to="/menuArticle">
       <v-btn
           color="deep-purple lighten-2"
           text
@@ -38,15 +39,25 @@
       >
         commander
       </v-btn>
+        </router-link>
     </v-card-actions>
   </v-card>
 </template>
-
 <script>
-
 export default {
   name: "restocard",
   props: ['resto'],
+  data: () => ({
+    loading: false,
+    selection: 1,
+  }),
+
+  methods: {
+    reserve () {
+      this.loading = true
+      setTimeout(() => (this.loading = false), 2000)
+    },
+  },
 }
 </script>
 

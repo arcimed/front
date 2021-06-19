@@ -88,7 +88,7 @@ extend('email', {
   ...email,
   message: 'Email must be valid',
 })
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjM4MjkzOTQsImV4cCI6MTYyMzgzMjk5NH0.VHMhAEgarkpobOuVu-Jm_BNCakkziY5NByToLKFTziI'
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
 const config = {
   headers: {Authorization: `Bearer ${token}`}
 }
