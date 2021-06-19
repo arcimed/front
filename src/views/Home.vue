@@ -9,6 +9,10 @@
 <script lang="ts">
   import Vue from 'vue'
   import restocard from '../components/restocard.vue'
+  import axios from "axios";
+  /*const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };*/
   let data = {
     restos: [
       {name: "test", address:"7 route du quemeneau", city:"saint-nazaire"},
@@ -23,6 +27,13 @@
     },
     data() {
       return data
+      /*let restos: []*/
     },
+    created: function () {
+     /* axios
+          .get(`http://localhost:3000/api/restaurant/all`)
+          .then((response) => {
+          });*/
+    }
   })
 </script>
