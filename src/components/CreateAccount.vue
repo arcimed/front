@@ -1,112 +1,84 @@
 <template>
-  <div class="create-account">
-    <form class="form-signup" @submit.prevent="createAccount">
-      <img
-        class="mb-4"
-        src="../assets/create-account.svg"
-        alt
-        width="72"
-        height="72"
-      />
-      <h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-for="(error, index) in errorMessage"
-        :key="index"
-      >
-        {{ error }}
-      </div>
+  <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+    <div>
+      <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
+        <v-tabs-slider color="purple darken-4"></v-tabs-slider>
+        <v-tab v-for="i in tabs" :key="i">
+          <v-icon large>{{ i.icon }}</v-icon>
+          <div class="caption py-1">{{ i.name }}</div>
+        </v-tab>
+        <v-tab-item>
+          <v-card class="px-4">
+            <v-card-text>
+              <v-form ref="loginForm" v-model="valid" lazy-validation>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field v-model="loginPassword" :append-icon="show1?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                  </v-col>
+                  <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                  </v-col>
+                  <v-spacer></v-spacer>
+                  <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+                    <v-btn x-large block :disabled="!valid" color="success" @click="login"> Login </v-btn>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card class="px-4">
+            <v-card-text>
+              <v-form ref="registerForm" v-model="valid" lazy-validation>
+                <v-row>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="user.firstName" :rules="[rules.required]" label="First Name" maxlength="20" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="user.lastName" :rules="[rules.required]" label="Last Name" maxlength="20" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="user.address" :rules="[rules.required]" label="address" maxlength="20" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field v-model="user.city" :rules="[rules.required]" label="city" maxlength="20" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field v-model="user.email" :rules="emailRules" label="E-mail" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field v-model="user.password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field block v-model="user.verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Confirm Password" counter @click:append="show1 = !show1"></v-text-field>
+                  </v-col>
+                  <div class="col-md-6 mb-3">
+                    <span>role : </span>
+                    <select v-model="user.role" class="form-control" placeholder="Role">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                    </select>
+                  </div>
 
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="firstName"
-            placeholder="First Name"
-            v-model="user.firstname"
-            required
-          />
-        </div>
-        <div class="col-md-6 mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="user.lastname"
-            id="lastName"
-            placeholder="Last Name"
-            value
-            required
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="user.email"
-            id="emailId"
-            placeholder="Email address"
-            value
-            required
-          />
-        </div>
-        <div class="col-md-6 mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="act-password"
-            placeholder="New password"
-            value
-            v-model="user.password"
-            required
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <input
-              type="text"
-              class="form-control"
-              id="act-address"
-              placeholder="Address"
-              value
-              v-model="user.address"
-              required
-          />
-        </div>
-        <div class="col-md-6 mb-3">
-          <input
-              type="text"
-              class="form-control"
-              id="act-city"
-              placeholder="City"
-              value
-              v-model="user.city"
-              required
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <span>role : </span>
-          <select v-model="user.role" class="form-control" placeholder="Role">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        <i class="fa fa-spinner fa-spin mr-1" v-if="showLoader"></i>Sign Up
-      </button>
-    </form>
-  </div>
+                  <v-spacer></v-spacer>
+                  <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
+                    <v-btn x-large block :disabled="!valid" color="success" @click="createAccount">Register</v-btn>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs>
+    </div>
+  </v-dialog>
 </template>
 <script>
 import axios from "axios";
@@ -115,20 +87,72 @@ export default {
   name: "CreateAccount",
   data() {
     return {
+      dialog: true,
+      tab: 0,
+      tabs: [
+        {name:"Login", icon:"mdi-account"},
+        {name:"Register", icon:"mdi-account-outline"}
+      ],
+      valid: true,
       showLoader: false,
       user: {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
+        verify: "",
         address:"",
         city: "",
         role: "",
       },
+      loginPassword: "",
+      loginEmail: "",
+      loginEmailRules: [
+        v => !!v || "Required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      emailRules: [
+        v => !!v || "Required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+
+      show1: false,
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => (v && v.length >= 4) || "Min 4 characters"
+      },
+
       errorMessage: [],
     };
   },
+  computed: {
+    passwordMatch() {
+      return () => this.password === this.verify || "Password must match";
+    }
+  },
   methods: {
+    login(event) {
+      this.showLoader = true;
+      const user = {
+        email: this.loginEmail,
+        password: this.loginPassword,
+      };
+      axios
+          .post(`http://localhost:3000/user-connect`, user)
+          .then((response) => {
+            this.showLoader = false;
+            event.target.reset();
+            this.$cookie.set('user', JSON.stringify(response.data), 1);
+          })
+          .catch((error) => {
+            this.showLoader = false;
+            this.isError = true;
+            errorToaster("Invalid Credentials", "");
+            console.log(error);
+            console.log(this.isError);
+          });
+      this.dialog = false;
+    },
     createAccount() {
       this.showLoader = true;
 
@@ -161,6 +185,7 @@ export default {
             );
           });
       }
+      this.dialog = false;
     },
 
     ValidateEmail(mail) {
