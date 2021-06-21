@@ -8,12 +8,6 @@
 
 <script>
 import articleCard from "@/components/articleCard";
-import Vue from "vue";
-/* eslint @typescript-eslint/no-var-requires: "off" */
-Vue.use(require('vue-cookie'));
-
-
-
 
 export default {
 name: "articleMenu",
@@ -26,7 +20,7 @@ name: "articleMenu",
     };
   },
   created: function () {
-    let token = this.$cookie.get('user');
+    let token = this.$session.get('user');
     const config = {
       headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
     };

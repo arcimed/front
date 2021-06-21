@@ -104,7 +104,7 @@ export default {
   methods: {
     submit () {
       this.$refs.observer.validate()
-      let token = this.$cookie.get('user');
+      let token = this.$session.get('user');
       const config = {
         headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
       };
