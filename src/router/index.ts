@@ -16,6 +16,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/addResto.vue')
   },
   {
+    path: '/AddArticle',
+    name: 'AddArticle',
+    component: () => import('../views/addArticle.vue')
+  },
+  {
     path: '/menuArticle',
     name: 'menuArticle',
     component: () => import('../views/articleMenu.vue')
