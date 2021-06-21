@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar @openDialog="toggleForm"/>
-    <v-main>
+    <v-main class="ma-10">
       <createAccount @closeDialog="toggleForm" v-if="login"></createAccount>
       <router-view/>
     </v-main>

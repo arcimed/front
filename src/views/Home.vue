@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div v-for="key in restos" :key="key.name">
-      <restocard :resto="key"></restocard>
+    <div v-for="resto in restos" :key="resto.name">
+      <restocard :resto="resto"></restocard>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@
       axios
           .get(`http://localhost:3000/api/restaurant/all`, config)
           .then((response) => {
-            this.restos = response.data
+            this.restos = response.data.data
           });
     }
   })

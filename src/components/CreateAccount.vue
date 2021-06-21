@@ -3,7 +3,7 @@
     <div>
       <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
         <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-        <v-tab v-for="i in tabs" :key="i">
+        <v-tab v-for="i in tabs" :key="i.name">
           <v-icon large>{{ i.icon }}</v-icon>
           <div class="caption py-1">{{ i.name }}</div>
         </v-tab>
@@ -150,7 +150,8 @@ export default {
             console.log(error);
             console.log(this.isError);
           });
-      this.dialog = false;
+
+      this.$emit('closeDialog');
     },
     createAccount() {
       this.showLoader = true;
@@ -184,7 +185,8 @@ export default {
             );
           });
       }
-      this.dialog = false;
+
+      this.$emit('closeDialog');
     },
 
     ValidateEmail(mail) {

@@ -17,14 +17,14 @@
         src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
     ></v-img>
 
-    <v-card-title>{{ resto[0].name }}</v-card-title>
+    <v-card-title>{{ resto.name }}</v-card-title>
 
     <v-card-text>
       <div class="my-4 text-subtitle-1">
-        {{ resto[0].city }}
+        {{ resto.city }}
       </div>
 
-      <div>{{ resto[0].address }}</div>
+      <div>{{ resto.address }}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
@@ -44,7 +44,6 @@
 </template>
 <script>
 export default {
-  name: "restocard",
   props: ['resto'],
   data: () => ({
     loading: false,
