@@ -59,7 +59,6 @@
 <script>
 import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
-import {errorToaster, successToaster} from "@/components/service/ErrorHandler";
 
 setInteractionMode('eager')
 
@@ -104,25 +103,13 @@ export default {
   methods: {
     submit () {
       this.$refs.observer.validate()
-      let token = this.$session.get('user');
-      const config = {
-        headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
-      };
       this.$http
-          .post(`http://localhost:3000/api/restaurant/create`, this.resto, config)
+          .post(`api/restaurant/create`, this.resto, config)
           .then(() => {
             this.showLoader = false;
-            successToaster(
-                "Registered Successfully",
-                "Restaurant Registered Successfully"
-            );
           })
           .catch((error) => {
             console.log(error);
-            errorToaster(
-                "Registeration Failed",
-                "Please try again after sometime"
-            );
           });
     },
     clear () {

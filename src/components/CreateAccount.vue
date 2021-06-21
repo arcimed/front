@@ -80,7 +80,6 @@
   </v-dialog>
 </template>
 <script>
-import { successToaster, errorToaster } from "./service/ErrorHandler.js";
 export default {
   name: "CreateAccount",
   data() {
@@ -144,10 +143,9 @@ export default {
             if (response.status === 200) {
               this.$session.start()
               this.$session.set('token', response.data.data.token)
-              this.$session.set('email', response.data.data.email)
-              this.$session.set('userId', response.data.data.userId)
-              this.$session.set('roleId', response.data.data.roleId)
-              this.$http.defaults.headers.common = {'Authorization': `bearer ${response.data.data.token}`}
+              this.$session.set('user', response.data.data.user)
+
+              console.log(this.$http.defaults.headers.common)
 
               if(this.$route.name === 'Home') {
                 this.$router.go()
@@ -155,14 +153,20 @@ export default {
                 this.$router.push({ name: 'Home'})
               }
             } else {
-              // popup => user invalid
+              this.$toast.open({
+                message: 'Informations d\'identification invalides!',
+                type: 'warning'
+              });
             }
           })
           .catch((error) => {
-            this.showLoader = false;
             this.isError = true;
             console.log(error)
-            errorToaster("Invalid Credentials", error);
+
+            this.$toast.open({
+              message: 'Informations d\'identification invalides!',
+              type: 'warning'
+            });
           });
 
       this.$emit('closeDialog');
@@ -186,17 +190,9 @@ export default {
           .post(`http://localhost:3000/user-register`, this.user)
           .then(() => {
             this.showLoader = false;
-            successToaster(
-              "Registered Successfully",
-              "User Registered Successfully"
-            );
           })
           .catch((error) => {
             console.log(error);
-            errorToaster(
-                "Registeration Failed",
-                "Please try again after sometime"
-            );
           });
       }
 

@@ -20,12 +20,8 @@ name: "articleMenu",
     };
   },
   created: function () {
-    let token = this.$session.get('user');
-    const config = {
-      headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
-    };
     this.$http
-        .get(`http://localhost:3000/api/article/all`, config)
+        .get(`api/article/all`)
         .then((response) => {
           this.articles = response.data
         });

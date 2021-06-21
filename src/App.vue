@@ -28,6 +28,10 @@ export default Vue.extend({
     toggleForm() {
       this.login = !this.login;
     },
+  },
+  beforeMount() {
+    this.$http.defaults.headers.common['Authorization'] = this.$session.get('token')
+    this.$http.defaults.headers.post['Content-Type'] = 'application/json';
   }
 });
 </script>

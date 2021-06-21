@@ -10,11 +10,6 @@
   import Vue from 'vue'
   import restocard from '../components/restocard.vue'
 
-  let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
-
   export default Vue.extend({
     name: 'Home',
     components: {
@@ -27,7 +22,7 @@
     },
     created: function () {
       this.$http
-          .get(`http://localhost:3000/api/restaurant/all`, config)
+          .get(`http://localhost:3000/api/restaurant/all`)
           .then((response) => {
             this.restos = response.data.data
           });
