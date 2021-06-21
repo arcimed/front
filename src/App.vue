@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar/>
+    <Navbar @openDialog="toggleForm"/>
     <v-main>
-      <createAccount v-if="login"></createAccount>
+      <createAccount @closeDialog="toggleForm" v-if="login"></createAccount>
       <router-view/>
     </v-main>
   </v-app>
@@ -11,6 +11,7 @@
 <script>
 
 import Navbar from './components/Navbar';
+import CreateAccount from './components/CreateAccount';
 import Vue from 'vue';
 // Tell Vue to use the plugin
 /* eslint @typescript-eslint/no-var-requires: "off" */

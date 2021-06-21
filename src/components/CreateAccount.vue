@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+  <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px" @click:outside="closeDialog">
     <div>
       <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
         <v-tabs-slider color="purple darken-4"></v-tabs-slider>
@@ -66,7 +66,6 @@
                       <option>6</option>
                     </select>
                   </div>
-
                   <v-spacer></v-spacer>
                   <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
                     <v-btn x-large block :disabled="!valid" color="success" @click="createAccount">Register</v-btn>
@@ -191,6 +190,10 @@ export default {
     ValidateEmail(mail) {
       return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(mail);
     },
+
+    closeDialog() {
+      this.$emit('closeDialog');
+    }
   },
 };
 </script>

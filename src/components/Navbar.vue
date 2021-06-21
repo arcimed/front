@@ -8,11 +8,9 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <router-link to="/login">
-        <v-btn target="_blank">
-          <span class="mr-2">login</span>
-        </v-btn>
-      </router-link>
+      <v-btn @click="openDialog">
+        <span class="mr-2">login</span>
+      </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
@@ -40,6 +38,11 @@ export default {
         { icon: 'mdi-cart', text: 'Panier', route: '/cart' },
       ],
       snackbar: false
+    }
+  },
+  methods: {
+    openDialog() {
+      this.$emit('openDialog');
     }
   }
 }
