@@ -104,7 +104,7 @@ export default {
     submit () {
       this.$refs.observer.validate()
       this.$http
-          .post(`api/restaurant/create`, this.resto, config)
+          .post(`api/restaurant/create`, this.resto)
           .then(() => {
             this.showLoader = false;
           })
