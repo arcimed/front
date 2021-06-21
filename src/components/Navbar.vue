@@ -54,6 +54,7 @@ export default {
     },
     destroySession() {
       this.$session.destroy()
+      this.$http.defaults.headers.common = {'Authorization': ``}
 
       if(this.$route.name === 'Home') {
         this.$router.go()
