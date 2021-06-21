@@ -8,7 +8,6 @@
 
 <script>
 import articleCard from "@/components/articleCard";
-import axios from "axios";
 import Vue from "vue";
 /* eslint @typescript-eslint/no-var-requires: "off" */
 Vue.use(require('vue-cookie'));
@@ -31,7 +30,7 @@ name: "articleMenu",
     const config = {
       headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
     };
-    axios
+    this.$http
         .get(`http://localhost:3000/api/article/all`, config)
         .then((response) => {
           this.articles = response.data

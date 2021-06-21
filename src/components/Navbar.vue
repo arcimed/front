@@ -8,9 +8,14 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn @click="openDialog">
-        <span class="mr-2">login</span>
+
+      <v-btn @click="destroySession" v-if="this.$session.exists()">
+        <span class="mr-2">Déconnection</span>
       </v-btn>
+      <v-btn @click="openDialog" v-else>
+        <span class="mr-2">Connection/Inscription</span>
+      </v-btn>
+
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
@@ -43,6 +48,18 @@ export default {
   methods: {
     openDialog() {
       this.$emit('openDialog');
+    },
+    isConnected() {
+      return this.$session.exists();
+    },
+    destroySession() {
+      this.$session.destroy()
+
+      if(this.$route.name === 'Home') {
+        this.$router.go()
+      } else {
+        this.$router.push({ name: 'Home'})
+      }
     }
   }
 }

@@ -13,9 +13,8 @@
 import Navbar from './components/Navbar';
 import CreateAccount from './components/CreateAccount';
 import Vue from 'vue';
-// Tell Vue to use the plugin
-/* eslint @typescript-eslint/no-var-requires: "off" */
-Vue.use(require('vue-cookie'));
+import VueSession from 'vue-session'
+Vue.use(VueSession)
 
 export default Vue.extend({
   name: 'App',

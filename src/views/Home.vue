@@ -6,10 +6,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
   import Vue from 'vue'
   import restocard from '../components/restocard.vue'
-  import axios from "axios";
 
   let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
   const config = {
@@ -27,7 +26,7 @@
       };
     },
     created: function () {
-      axios
+      this.$http
           .get(`http://localhost:3000/api/restaurant/all`, config)
           .then((response) => {
             this.restos = response.data.data

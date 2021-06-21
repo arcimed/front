@@ -80,7 +80,6 @@
   </v-dialog>
 </template>
 <script>
-import axios from "axios";
 import { successToaster, errorToaster } from "./service/ErrorHandler.js";
 export default {
   name: "CreateAccount",
@@ -130,25 +129,40 @@ export default {
     }
   },
   methods: {
-    login(event) {
+    login() {
+      console.log('log')
       this.showLoader = true;
       const user = {
         email: this.loginEmail,
         password: this.loginPassword,
       };
-      axios
-          .post(`http://localhost:3000/user-connect`, user)
+      this.$http
+          .post(`user-connect`, user)
           .then((response) => {
             this.showLoader = false;
-            event.target.reset();
-            this.$cookie.set('user', JSON.stringify(response.data), 1);
+
+            if (response.status === 200) {
+              this.$session.start()
+              this.$session.set('token', response.data.data.token)
+              this.$session.set('email', response.data.data.email)
+              this.$session.set('userId', response.data.data.userId)
+              this.$session.set('roleId', response.data.data.roleId)
+              this.$http.defaults.headers.common = {'Authorization': `bearer ${response.data.data.token}`}
+
+              if(this.$route.name === 'Home') {
+                this.$router.go()
+              } else {
+                this.$router.push({ name: 'Home'})
+              }
+            } else {
+              // popup => user invalid
+            }
           })
           .catch((error) => {
             this.showLoader = false;
             this.isError = true;
-            errorToaster("Invalid Credentials", "");
-            console.log(error);
-            console.log(this.isError);
+            console.log(error)
+            errorToaster("Invalid Credentials", error);
           });
 
       this.$emit('closeDialog');
@@ -168,7 +182,7 @@ export default {
         this.errorMessage.push("Please provide a valid Email address");
       }
       if (this.errorMessage.length === 0) {
-        axios
+        this.$http
           .post(`http://localhost:3000/user-register`, this.user)
           .then(() => {
             this.showLoader = false;

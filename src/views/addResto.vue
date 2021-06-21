@@ -59,7 +59,6 @@
 <script>
 import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
-import axios from "axios";
 import {errorToaster, successToaster} from "@/components/service/ErrorHandler";
 
 setInteractionMode('eager')
@@ -109,7 +108,7 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
       };
-      axios
+      this.$http
           .post(`http://localhost:3000/api/restaurant/create`, this.resto, config)
           .then(() => {
             this.showLoader = false;
