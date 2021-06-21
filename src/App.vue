@@ -27,7 +27,11 @@
 </template>
 
 <script lang="ts">
+
 import Vue from 'vue';
+// Tell Vue to use the plugin
+/* eslint @typescript-eslint/no-var-requires: "off" */
+Vue.use(require('vue-cookie'));
 
 export default Vue.extend({
   name: 'App',

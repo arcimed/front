@@ -77,7 +77,6 @@ export default {
       this.isSignUp = !this.isSignUp;
     },
 
-    ...mapMutations(["ADD_LOGGED_USER"]),
 
     //  Login function usign email and password
     login(event) {
@@ -90,9 +89,9 @@ export default {
         .post(`http://localhost:3000/user-connect`, user)
         .then((response) => {
           this.showLoader = false;
-          this.ADD_LOGGED_USER(response.data[0]);
           event.target.reset();
-          this.$router.push(this.$route.query.from || "/");
+          console.log(JSON.parse(response.data));
+          this.$cookie.set('user',JSON.parse(response.data), 1);
         })
         .catch((error) => {
           this.showLoader = false;
