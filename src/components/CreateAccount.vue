@@ -145,13 +145,16 @@ export default {
               this.$session.set('token', response.data.data.token)
               this.$session.set('user', response.data.data.user)
 
-              console.log(this.$http.defaults.headers.common)
-
               if(this.$route.name === 'Home') {
                 this.$router.go()
               } else {
                 this.$router.push({ name: 'Home'})
               }
+
+              this.$toast.open({
+                message: 'Vous êtes bien connecté(e)!',
+                type: 'success'
+              });
             } else {
               this.$toast.open({
                 message: 'Informations d\'identification invalides!',
