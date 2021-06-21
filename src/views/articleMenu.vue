@@ -1,6 +1,5 @@
 <template>
   <div class="row">
-    {{articles}}
     <div v-for="key in articles" :key="key.name">
       <articleCard :article="key"></articleCard>
     </div>
@@ -16,10 +15,7 @@ Vue.use(require('vue-cookie'));
 
 
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
-const config = {
-  headers: { Authorization: `Bearer ${token}` }
-};
+
 export default {
 name: "articleMenu",
   components: {
@@ -31,12 +27,14 @@ name: "articleMenu",
     };
   },
   created: function () {
-    var tokens = this.$cookie.get('user');
-    console.log(tokens)
+    let token = this.$cookie.get('user');
+    const config = {
+      headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
+    };
     axios
         .get(`http://localhost:3000/api/article/all`, config)
         .then((response) => {
-          this.article = response.data
+          this.articles = response.data
         });
   }
 }

@@ -88,10 +88,7 @@ extend('email', {
   ...email,
   message: 'Email must be valid',
 })
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE2MjQxMTU4NzYsImV4cCI6MTYyNDE1MTg3Nn0.B4iibbMEL3uFgjx-bFSfBqdnWORQwrtpWd87b3EpE_U'
-const config = {
-  headers: {Authorization: `Bearer ${token}`}
-}
+
 export default {
   components: {
     ValidationProvider,
@@ -108,6 +105,10 @@ export default {
   methods: {
     submit () {
       this.$refs.observer.validate()
+      let token = this.$cookie.get('user');
+      const config = {
+        headers: { Authorization: `Bearer ${JSON.parse(token).data.token}` }
+      };
       axios
           .post(`http://localhost:3000/api/restaurant/create`, this.resto, config)
           .then(() => {

@@ -90,8 +90,7 @@ export default {
         .then((response) => {
           this.showLoader = false;
           event.target.reset();
-          console.log(JSON.parse(response.data));
-          this.$cookie.set('user',JSON.parse(response.data), 1);
+          this.$cookie.set('user', JSON.stringify(response.data), 1);
         })
         .catch((error) => {
           this.showLoader = false;
